@@ -1,0 +1,106 @@
+import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.List;
+/**
+ * Write a description of class Level1 here.
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
+public class Level1 extends World
+{
+    /**
+     * Constructor for objects of class Level1.
+     * 
+     */
+    private int xOffset = 0;
+    private final static int SWIDTH = 1600;
+    private final static int SHEIGHT = 700;
+    private final static int WWIDTH = 6699;
+    private GreenfootImage bimg;
+    public Level1()
+    {    
+        // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
+        super(SWIDTH, SHEIGHT, 1, false);
+        bimg = new GreenfootImage("kitchen3times.png");
+        shiftWorld(0);
+        prepare();
+    }
+    public void shiftWorld(int dx)
+    {
+        if ((xOffset + dx) <= 0 && (xOffset + dx) >= SWIDTH - WWIDTH)
+        {
+            xOffset = xOffset + dx;
+            shiftWorldBackground(dx);
+            shiftWorldActors(dx);
+        }
+    }
+    private void shiftWorldBackground(int dx)
+    {
+        GreenfootImage bkgd = new GreenfootImage(SWIDTH, SHEIGHT);
+        bkgd.drawImage(bimg, xOffset, 0);
+        setBackground(bkgd);
+    }
+    private void shiftWorldActors(int dx)
+    {
+        List<ScrollingActor> saList;
+        saList = getObjects(ScrollingActor.class);
+        for( ScrollingActor a : saList)
+        {
+            a.setAbsoluteLocation(dx);
+        }
+    }
+    
+    Mobby mobby = IntroScreen.mobby;
+    PowerBar powerBar = new PowerBar();
+    HealthBar healthBar = new HealthBar();
+    /**
+     * Prepare the world for the start of the program.
+     * That is: create the initial objects and add them to the world.
+     */
+    private void prepare()
+    {
+        addObject(IntroScreen.mobby, SWIDTH / 2, getHeight() / 2);
+        addObject(powerBar, getWidth() / 2, 200);
+        addObject(healthBar, getWidth() / 2, 100);
+        PileOfBoxes pileOfBoxes0 = new PileOfBoxes();
+        addObject(pileOfBoxes0, 2275, 415);
+        PileOfBoxes pileOfBoxes1 = new PileOfBoxes();
+        addObject(pileOfBoxes1, 4505, 415);
+        Mobster mobster0 = new Mobster();
+        addObject(mobster0,3400,365);
+        Mobster mobster1 = new Mobster();
+        addObject(mobster1,3900,365);
+        Mobster mobster2 = new Mobster();
+        addObject(mobster2,4300,365);
+        Mobster mobster3 = new Mobster();
+        addObject(mobster3,5000,365);
+        Mobster mobster4 = new Mobster();
+        addObject(mobster4,5500,365);
+        Mobster mobster5 = new Mobster();
+        addObject(mobster5,5800,365);
+    }
+    
+    public double power;
+    public void act()
+    {
+        meatballPower();
+        healthBar.setLocation(mobby.getX(), mobby.getY() - 175);
+        powerBar.setLocation(mobby.getX(), mobby.getY() - 150);
+        if (xOffset <= -5096) {
+            Level2 level2 = IntroScreen.level2;
+            Greenfoot.setWorld(level2);
+        }
+    }
+    
+    public static boolean resetPower;
+    public void meatballPower()
+    {
+        if (Greenfoot.isKeyDown("f")) {
+            power++;
+            resetPower = false;
+        }
+        else {
+            if (resetPower) power = 0;
+        }
+    }
+}

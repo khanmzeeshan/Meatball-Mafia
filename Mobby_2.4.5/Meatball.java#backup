@@ -1,0 +1,62 @@
+import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+
+/**
+ * Write a description of class Meatball here.
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
+public class Meatball extends SmoothMover
+{
+    /**
+     * Act - do whatever the Meatball wants to do. This method is called whenever
+     * the 'Act' or 'Run' button gets pressed in the environment.
+     */
+    private int vSpeed = 30;
+    public void act() 
+    {
+        if (Check == true) {
+            getDirection();
+            getPower();
+            MyWorld.resetPower = true;
+        }
+        arc();
+        remove();
+    }
+    
+    boolean Check = true;
+    double direction = 1;
+    public void getDirection() //gets direction Mobby is facing
+    {
+            direction = ((Mobby) getWorld().getObjects(Mobby.class).get(0)).getDirection();
+    }
+    
+    public double power;
+    public void getPower()
+    {
+            power = ((MyWorld) getWorld()).power;
+            Check = false; //makes sure direction is only checked once so meatball flies in correct direction
+    }
+    
+    public void arc() //sets the path of the flight of the meatball
+    {       
+        World w = getWorld();
+        if( getY() <= w.getHeight() - 10) {
+            move(power*direction);
+            setLocation(getX(), getY() - (power/2) - vSpeed);
+            vSpeed = vSpeed - 3;
+        }   
+        else {
+            setLocation(getX(), getY());
+        }
+    }
+    
+    private int timer = 0;
+    public void remove() //removes meatball after time period
+    {
+        timer++;
+        if (timer >= 200) {
+            getWorld().removeObject(this);
+        }
+    }
+}

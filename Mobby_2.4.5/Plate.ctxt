@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.target=Plate
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Plate\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=size\ direction
+comment1.target=Plate(int,\ int)
+comment2.params=
+comment2.target=void\ act()
+comment3.params=
+comment3.target=void\ checkRemove()
+comment4.params=
+comment4.target=void\ checkMeatball()
+comment5.params=
+comment5.target=void\ explode()
+comment6.params=x\ y\ numFragments
+comment6.target=void\ placeDebris(int,\ int,\ int)
+numComments=7
